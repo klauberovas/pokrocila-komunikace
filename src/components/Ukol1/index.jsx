@@ -1,5 +1,6 @@
 import { SwitchButton } from './SwitchButton';
 import './style.css';
+import { useState } from 'react';
 
 /*
   Zadání: V tomto úkolu začneme zjednodušnou komunikací mezi komponentami. 
@@ -28,10 +29,29 @@ import './style.css';
 */
 
 export const Ukol1 = () => {
+  const [bulbOn, setBulbOn] = useState(true);
+
+  const handleSwitch = () => {
+    if (bulbOn === false) {
+      const confirm = window.confirm('Opravdu chcete zapnout žárovku?');
+      if (confirm) {
+        setBulbOn(true);
+      } else {
+        setBulbOn(false);
+      }
+    } else {
+      setBulbOn(false);
+    }
+  };
+
   return (
     <>
-      <div className="bulb bulb--on" />
-      <SwitchButton label="Vypnout" />
+      <div className={bulbOn ? 'bulb bulb--on' : 'bulb'} />
+      <SwitchButton
+        label={bulbOn ? 'Vypnout' : 'Zapnout'}
+        onSwitch={handleSwitch}
+        on={bulbOn}
+      />
     </>
   );
 };
